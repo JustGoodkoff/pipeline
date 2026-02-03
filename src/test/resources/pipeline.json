@@ -1,0 +1,72 @@
+{
+  "types": {
+    "ImageMeta": {
+      "javaType": "com.nsu.data.ImageMeta"
+    },
+    "JpgImage": { "extends": "ImageMeta",
+      "javaType": "com.nsu.data.JpgImage"
+    }
+  },
+
+  "sources": {
+    "source": {
+      "data": [
+        {
+          "type": "ImageMeta",
+          "value": {
+            "id": "img-1"
+          }
+        },
+        {
+          "type": "ImageMeta",
+          "value": {
+            "id": "img-2"
+          }
+        },
+        {
+          "type": "ImageMeta",
+          "value": {
+            "id": "img-3"
+          }
+        }
+      ]
+    }
+  },
+
+  "operators": {
+    "source": {
+      "kind": "source",
+      "outputs": {
+        "out": {
+          "type": "ImageMeta",
+          "to": "denoise.in"
+        }
+      }
+    },
+    "denoise": {
+      "kind": "map",
+      "funBody": "return new com.nsu.data.JpgImage(in.id);",
+      "inputs": {
+        "in": {
+          "type": "ImageMeta",
+          "from": "source.out"
+        }
+      },
+      "outputs": {
+        "out": {
+          "type": "JpgImage",
+          "to": "sink.in"
+        }
+      }
+    },
+    "sink": {
+      "kind": "sink",
+      "inputs": {
+        "in": {
+          "type": "JpgImage",
+          "from": "denoise.out"
+        }
+      }
+    }
+  }
+}
